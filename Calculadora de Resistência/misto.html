@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="misto.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">    
+    <title>Mista</title>
+</head>
+<body>
+    <div class="home-container">
+        <a href="index.html" class="home-link">HOME</a>
+    </div>
+
+    <div class="container">
+        <h2 class="title">MISTA</h2>
+
+        <form id="formulario">
+            <div class="form-group">
+                <label for="voltagem">Voltagem (V):</label>
+                <input type="number" id="voltagem" min="0" step="any" required>
+            </div>
+            <div class="form-group">
+                <label for="resistor1">Resistor 1 (Ω):</label>
+                <input type="number" id="resistor1" min="0" step="any" required>
+            </div>
+            <div class="form-group">
+                <label for="resistor2">Resistor 2 (Ω):</label>
+                <input type="number" id="resistor2" min="0" step="any" required>
+            </div>
+            <div class="form-group">
+                <label for="resistor3">Resistor 3 (Ω):</label>
+                <input type="number" id="resistor3" min="0" step="any" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Calcular">
+            </div>
+        </form>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        document.getElementById("formulario").addEventListener("submit", function(event) {
+            event.preventDefault(); // Previne o envio do formulário
+
+            // Obtém os valores dos resistores e da voltagem
+            var resistor1 = parseFloat(document.getElementById("resistor1").value);
+            var resistor2 = parseFloat(document.getElementById("resistor2").value);
+            var resistor3 = parseFloat(document.getElementById("resistor3").value);
+            var voltagem = parseFloat(document.getElementById("voltagem").value);
+
+            // Calcula a resistência total em série
+            var resistenciaSerie = resistor1 + resistor2;
+
+            // Calcula a resistência total em paralelo
+            var resistenciaParalelo = 1 / (1 / resistenciaSerie + 1 / resistor3);
+
+            // Calcula a corrente total
+            var correnteTotal = voltagem / resistenciaParalelo;
+
+            // Exibe o resultado
+            document.getElementById("resultado").innerHTML = "Resistência Total: " + resistenciaParalelo.toFixed(2) + " Ω<br>"
+                                                                + "Corrente Total: " + correnteTotal.toFixed(2) + " A";
+        });
+    </script>
+</body>
+</html>
